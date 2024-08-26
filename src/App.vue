@@ -1,23 +1,23 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import BHeader from './components/BHeader.vue'
+import LibraryRegistrationForm from './views/SignupView.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div class="main-container">
+    <header>
+      <BHeader />
+    </header>
+  </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
+  <main class="main-box">
+    <!-- <LibraryRegistrationForm />
+    <JSONLab /> -->
+    <router-view></router-view>
   </main>
 </template>
 
-<style scoped>
+<style>
 header {
   line-height: 1.5;
 }
@@ -43,5 +43,10 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
+
+h1,
+p {
+  text-align: center;
 }
 </style>
