@@ -8,6 +8,14 @@ const newUser = ref({
   confirmPassword: ''
 })
 
+const clearForm = () => {
+  newUser.value = {
+    username: '',
+    password: '',
+    confirmPassword: ''
+  }
+}
+
 const router = useRouter()
 
 const submitForm = () => {
@@ -82,6 +90,7 @@ const validateConfirmPassword = (blur) => {
     errors.value.confirmPassword = null
   }
 }
+
 </script>
 
 <template>

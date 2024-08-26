@@ -10,6 +10,13 @@ const loginData = ref({
   password: ''
 })
 
+const clearForm = () => {
+  loginData.value = {
+    username: '',
+    password: ''
+  }
+}
+
 const loginFunc = () => {
   validateName(true)
   validatePassword(true)
