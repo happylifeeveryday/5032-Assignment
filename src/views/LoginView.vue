@@ -77,7 +77,7 @@ const validateAuthenticated = () => {
 
 <template>
   <div class="container">
-    <div class="col-6 offset-3">
+    <div class="col-6 offset-3 col-md-12 offset-md-0">
       <h1 class="text-center">Login</h1>
 
       <form @submit.prevent="loginFunc">

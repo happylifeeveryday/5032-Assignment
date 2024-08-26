@@ -90,7 +90,7 @@ const validateConfirmPassword = (blur) => {
 </script>
 
 <template>
-  <div class="container">
+  <!-- <div class="container">
     <div class="col-8 offset-2">
       <h1 class="text-center">Signup</h1>
       <form @submit.prevent="submitForm">
@@ -141,5 +141,80 @@ const validateConfirmPassword = (blur) => {
         </div>
       </form>
     </div>
+  </div> -->
+  <div class="row vh-100 vw-100 custom-background text-white">
+    <div class="col-md-6 d-flex align-items-center col-12">
+      <div class="container">
+        <div class="col-8 offset-md-3 offset-2">
+          <div class="h1 col text-center mb-3">Hello There</div>
+          <div class="col text-center mb-3">
+            Hey, enter your details to get sign up to your account
+          </div>
+          <form @submit.prevent="submitForm">
+            <!-- USERNAME -->
+            <div class="col-8 offset-2 mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                @blur="() => validateName(true)"
+                @input="() => validateName(false)"
+                v-model="newUser.username"
+              />
+              <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
+            </div>
+            <!-- PASSWORD -->
+            <div class="col-8 offset-2 mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                @blur="() => validatePassword(true)"
+                @input="() => validatePassword(false)"
+                v-model="newUser.password"
+              />
+              <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
+            </div>
+            <!-- CONFIRM PASSWORD -->
+            <div class="col-8 offset-2 mb-4">
+              <label for="confirm-password" class="form-label">Confirm password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirm-password"
+                v-model="newUser.confirmPassword"
+                @blur="() => validateConfirmPassword(true)"
+                @input="() => validateConfirmPassword(false)"
+              />
+              <div v-if="errors.confirmPassword" class="text-danger">
+                {{ errors.confirmPassword }}
+              </div>
+            </div>
+            <!-- BUTTON -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary me-2">Submit</button>
+              <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 d-flex align-items-center d-none d-md-flex">
+      <!-- <div class="container"> -->
+      <div class="col d-flex justify-content-center align-items-center">
+        <img src="../assets/pic.png" class="img-fluid col-6" alt="Image" />
+      </div>
+      <!-- </div> -->
+    </div>
   </div>
 </template>
+
+<style scoped>
+.custom-background {
+  background-color: #360026;
+  margin: 0;
+  padding: 0;
+}
+</style>
