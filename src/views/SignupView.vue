@@ -1,26 +1,40 @@
 <script setup>
 import { ref } from 'vue'
 
-const formData = ref({
+const newUser = ref({
   username: '',
   password: '',
   confirmPassword: ''
 })
-
-const submittedCards = ref([])
 
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
   validateConfirmPassword(true)
   if (!errors.value.username && !errors.value.password && !errors.value.confirmPassword) {
-    submittedCards.value.push({ ...formData.value })
+    // Steps 1 & 2: Check if ‘users’ exists in localStorage and read or create an array accordingly.
+    const existingUsers = localStorage.getItem('users')
+    let users = existingUsers ? JSON.parse(existingUsers) : []
+
+    // Step 3: Check if a user with the same name already exists in the array
+    const userExists = users.some((user) => user.username === newUser.value.username)
+
+    // Step 4: Add a new user if the user name does not exist
+    if (!userExists) {
+      users.push(newUser.value)
+
+      // Step 5: Convert the updated array to a string and store it back to localStorage
+      localStorage.setItem('users', JSON.stringify(users))
+      alert('sign up successfully.')
+    } else {
+      alert('User with this username already exists.')
+    }
     clearForm()
   }
 }
 
 const clearForm = () => {
-  formData.value = {
+  newUser.value = {
     username: '',
     password: '',
     confirmPassword: ''
@@ -34,7 +48,7 @@ const errors = ref({
 })
 
 const validateName = (blur) => {
-  if (formData.value.username.length < 3) {
+  if (newUser.value.username.length < 3) {
     if (blur) errors.value.username = 'Name must be at least 3 characters.'
   } else {
     errors.value.username = null
@@ -42,7 +56,7 @@ const validateName = (blur) => {
 }
 
 const validatePassword = (blur) => {
-  const password = formData.value.password
+  const password = newUser.value.password
   const minLength = 8
   const hasUppercase = /[A-Z]/.test(password)
   const hasLowercase = /[a-z]/.test(password)
@@ -65,13 +79,10 @@ const validatePassword = (blur) => {
 }
 
 const validateConfirmPassword = (blur) => {
-  if (formData.value.password !== formData.value.confirmPassword) {
-    if (blur) errors.value.confirmPassword = 'Passwords do not match.'
-  } else {
-    errors.value.confirmPassword = null
-  }
-  if (formData.value.confirmPassword == '') {
+  if (newUser.value.confirmPassword == '') {
     errors.value.confirmPassword = 'Password cannot be empty.'
+  } else if (newUser.value.password !== newUser.value.confirmPassword) {
+    if (blur) errors.value.confirmPassword = 'Passwords do not match.'
   } else {
     errors.value.confirmPassword = null
   }
@@ -91,7 +102,7 @@ const validateConfirmPassword = (blur) => {
             id="username"
             @blur="() => validateName(true)"
             @input="() => validateName(false)"
-            v-model="formData.username"
+            v-model="newUser.username"
           />
           <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
         </div>
@@ -104,7 +115,7 @@ const validateConfirmPassword = (blur) => {
             id="password"
             @blur="() => validatePassword(true)"
             @input="() => validatePassword(false)"
-            v-model="formData.password"
+            v-model="newUser.password"
           />
           <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
         </div>
@@ -115,8 +126,9 @@ const validateConfirmPassword = (blur) => {
             type="password"
             class="form-control"
             id="confirm-password"
-            v-model="formData.confirmPassword"
+            v-model="newUser.confirmPassword"
             @blur="() => validateConfirmPassword(true)"
+            @input="() => validateConfirmPassword(false)"
           />
           <div v-if="errors.confirmPassword" class="text-danger">
             {{ errors.confirmPassword }}
