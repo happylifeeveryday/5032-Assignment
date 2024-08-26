@@ -17,9 +17,9 @@ const loginFunc = () => {
   if (!errors.value.username && !errors.value.password && isAuthenticated.value) {
     alert('Login Successfully.')
     clearForm()
-    router.push('/About')
   } else if (!errors.value.username && !errors.value.password) {
     alert('Username and Password do not match!')
+    clearForm()
   }
 }
 
@@ -67,9 +67,11 @@ const validatePassword = (blur) => {
 }
 
 const validateAuthenticated = () => {
-  if (loginData.value.username == 'Yihan' && loginData.value.password == 'Aa123456*') {
-    isAuthenticated.value = true
-  }
+  const existingUsers = localStorage.getItem('users')
+  let users = existingUsers ? JSON.parse(existingUsers) : []
+  isAuthenticated.value = users.some((user) => {
+    return user.username === loginData.value.username && user.password === loginData.value.password
+  })
 }
 </script>
 
