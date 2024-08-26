@@ -1,6 +1,6 @@
 <script setup>
 import BHeader from './components/BHeader.vue'
-import LibraryRegistrationForm from './views/SignupView.vue'
+import LibraryRegistrationForm from './views/SignUpView.vue'
 </script>
 
 <template>

@@ -23,13 +23,6 @@ const loginFunc = () => {
   }
 }
 
-const clearForm = () => {
-  loginData.value = {
-    username: '',
-    password: ''
-  }
-}
-
 const errors = ref({
   username: null,
   password: null
@@ -99,7 +92,7 @@ const validateAuthenticated = () => {
               <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
             </div>
             <!-- PASSWORD -->
-            <div class="col-8 offset-2 mb-3">
+            <div class="col-8 offset-2 mb-4">
               <label for="password" class="form-label">Password</label>
               <input
                 type="password"
@@ -113,10 +106,10 @@ const validateAuthenticated = () => {
             </div>
             <!-- BUTTON -->
             <div class="text-center">
-              <button type="submit" class="btn btn-primary me-2">Submit</button>
-              <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
+              <button type="submit" class="btn btn-light me-2 col-3 mb-4" style="color: #360026;">Sign In</button>
             </div>
           </form>
+          <p>Don't have an account? <strong @click="() => {router.push('/signup')}">Sign up!</strong></p>
         </div>
       </div>
     </div>
@@ -135,5 +128,10 @@ const validateAuthenticated = () => {
   background-color: #360026;
   margin: 0;
   padding: 0;
+}
+
+strong:hover{
+  color: #006400;
+  cursor: pointer;
 }
 </style>

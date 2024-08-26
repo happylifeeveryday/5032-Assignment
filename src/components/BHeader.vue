@@ -21,12 +21,12 @@ const logout = () => {
           >
         </li>
         <li class="nav-item">
-          <router-link to="/login" class="nav-link" active-class="active" aria-current="page"
-            >Login</router-link
+          <router-link to="/signin" class="nav-link" active-class="active" aria-current="page"
+            >Sign In</router-link
           >
         </li>
         <li class="nav-item">
-          <router-link to="/signup" class="nav-link" active-class="active">Signup</router-link>
+          <router-link to="/signup" class="nav-link" active-class="active">Sign Up</router-link>
         </li>
       </ul>
     </header>

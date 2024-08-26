@@ -1,11 +1,14 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 
 const newUser = ref({
   username: '',
   password: '',
   confirmPassword: ''
 })
+
+const router = useRouter()
 
 const submitForm = () => {
   validateName(true)
@@ -30,14 +33,6 @@ const submitForm = () => {
       alert('User with this username already exists.')
     }
     clearForm()
-  }
-}
-
-const clearForm = () => {
-  newUser.value = {
-    username: '',
-    password: '',
-    confirmPassword: ''
   }
 }
 
@@ -142,10 +137,10 @@ const validateConfirmPassword = (blur) => {
             </div>
             <!-- BUTTON -->
             <div class="text-center">
-              <button type="submit" class="btn btn-primary me-2">Submit</button>
-              <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
+              <button type="submit" class="btn btn-light me-2 col-3 mb-4" style="color: #360026;">Sign Up</button>
             </div>
           </form>
+          <p>Already have an account? <strong @click="() => {router.push('/signin')}">Sign in!</strong></p>
         </div>
       </div>
     </div>
@@ -164,5 +159,10 @@ const validateConfirmPassword = (blur) => {
   background-color: #360026;
   margin: 0;
   padding: 0;
+}
+
+strong:hover{
+  color: #006400;
+  cursor: pointer;
 }
 </style>
