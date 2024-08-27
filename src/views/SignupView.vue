@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
 const newUser = ref({
   username: '',
@@ -90,14 +90,14 @@ const validateConfirmPassword = (blur) => {
     errors.value.confirmPassword = null
   }
 }
-
 </script>
 
 <template>
   <div class="row vh-100 vw-100 custom-background text-white">
     <div class="col-md-6 d-flex align-items-center col-12">
       <div class="container">
-        <div class="col-8 offset-md-3 offset-2">
+        <div class="col-10 offset-md-3 offset-1 col-md-8 offset-md-2" style="border-radius: 30px;background-color: #6d3a5e;">
+          <div class="h1 col offset-1 mb-3"><i class="bi bi-arrow-return-left" @click="()=>{router.push('/')}" style="cursor: pointer;"></i></div>
           <div class="h1 col text-center mb-3">Get Started</div>
           <div class="col text-center mb-3">
             Hey, enter your details to get sign up to your account
@@ -146,17 +146,30 @@ const validateConfirmPassword = (blur) => {
             </div>
             <!-- BUTTON -->
             <div class="text-center">
-              <button type="submit" class="btn btn-light me-2 col-3 mb-4" style="color: #360026;">Sign Up</button>
+              <button type="submit" class="btn btn-light col-md-3 col-5 mb-4" style="color: #360026">
+                Sign Up
+              </button>
             </div>
           </form>
-          <p>Already have an account? <strong @click="() => {router.push('/signin')}">Sign in!</strong></p>
+          <p class="mb-4">
+            Already have an account?
+            <strong
+              @click="
+                () => {
+                  router.push('/signin')
+                }
+              "
+              >Sign in!</strong
+            >
+          </p>
+          <p><br></p>
         </div>
       </div>
     </div>
-    <div class="col-md-6 d-flex align-items-center d-none d-md-flex">
+    <div class="col-md-6 align-items-center d-none d-md-flex">
       <!-- <div class="container"> -->
       <div class="col d-flex justify-content-center align-items-center">
-        <img src="../assets/pic.png" class="img-fluid col-6" alt="Image" />
+        <img src="../assets/pic.png" class="img-fluid col-7" alt="Image" />
       </div>
       <!-- </div> -->
     </div>
@@ -170,7 +183,7 @@ const validateConfirmPassword = (blur) => {
   padding: 0;
 }
 
-strong:hover{
+strong:hover {
   color: #006400;
   cursor: pointer;
 }
