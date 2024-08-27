@@ -79,8 +79,21 @@ const validateAuthenticated = () => {
   <div class="row vh-100 vw-100 custom-background text-white">
     <div class="col-md-6 d-flex align-items-center col-12">
       <div class="container">
-        <div class="col-10 offset-md-3 offset-1 col-md-8 offset-md-2 " style="border-radius: 30px;background-color: #6d3a5e;">
-          <div class="h1 col offset-1 mb-3"><i class="bi bi-arrow-return-left" @click="()=>{router.push('/')}" style="cursor: pointer;"></i></div>
+        <div
+          class="col-10 offset-md-3 offset-1 col-md-8 offset-md-2"
+          style="border-radius: 30px; background-color: #6d3a5e"
+        >
+          <div class="h1 col offset-1 mb-3">
+            <i
+              class="bi bi-arrow-return-left"
+              @click="
+                () => {
+                  router.push('/')
+                }
+              "
+              style="cursor: pointer"
+            ></i>
+          </div>
           <div class="h1 col text-center mb-3">Hello There</div>
           <div class="col text-center mb-3">
             Hey, enter your details to get sign in to your account
@@ -114,7 +127,11 @@ const validateAuthenticated = () => {
             </div>
             <!-- BUTTON -->
             <div class="text-center col-12">
-              <button type="submit" class="btn btn-light col-md-3 col-5 mb-4" style="color: #360026">
+              <button
+                type="submit"
+                class="btn btn-light col-md-3 col-5 mb-4"
+                style="color: #360026"
+              >
                 Sign In
               </button>
             </div>
@@ -130,7 +147,7 @@ const validateAuthenticated = () => {
               >Sign up!</strong
             >
           </p>
-          <p><br></p>
+          <p><br /></p>
         </div>
       </div>
     </div>
@@ -155,7 +172,4 @@ strong:hover {
   color: #006400;
   cursor: pointer;
 }
-
-
-
 </style>

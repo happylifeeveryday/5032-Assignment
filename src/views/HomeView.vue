@@ -1,3 +1,7 @@
-<template></template>
+<template>
+  <BHeader />
+</template>
 
-<script setup></script>
+<script setup>
+import BHeader from '@/components/BHeader.vue'
+</script>

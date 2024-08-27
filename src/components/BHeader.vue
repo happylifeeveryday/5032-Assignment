@@ -12,60 +12,53 @@ const logout = () => {
 </script>
 
 <template>
-  <div class="container">
-    <header class="d-flex flex-column align-items-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-          <router-link to="/" class="nav-link" active-class="active" aria-current="page"
-            >Home</router-link
-          >
-        </li>
-        <li class="nav-item">
-          <router-link to="/signin" class="nav-link" active-class="active" aria-current="page"
-            >Sign In</router-link
-          >
-        </li>
-        <li class="nav-item">
-          <router-link to="/signup" class="nav-link" active-class="active">Sign Up</router-link>
-        </li>
-      </ul>
-    </header>
-  </div>
+    <!-- navi -->
+    <div class="row vw-100" style="padding: 0; margin: 0;background-color: #b55e6c">
+      <header
+        class="d-flex flex-column align-items-center py-3"
+        style="justify-content: space-between"
+      >
+        <ul class="nav">
+          <li class="nav-item">
+            <router-link to="/" class="nav-link">Homepage</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/signin" class="nav-link">Resouces Center</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/signup" class="nav-link">Support and Donations</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/signup" class="nav-link">Community Forum</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/signup" class="nav-link">Activities and Projects</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/signup" class="nav-link">FAQS</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/signup" class="nav-link">User Center</router-link>
+          </li>
+        </ul>
+      </header>
+    </div>
 </template>
 
 <style scoped>
-.b-example-divider {
-  height: 3rem;
-  background-color: rgba(0, 0, 0, 0.1);
-  border: solid rgba(0, 0, 0, 0.15);
-  border-width: 1px 0;
-  box-shadow:
-    inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
-    inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+.nav-link {
+  color: white;
+  font-family: 'Inter';
+  font-weight: bold;
 }
 
-.form-control-dark {
-  color: #fff;
-  background-color: var(--bs-dark);
-  border-color: var(--bs-gray);
-}
-.form-control-dark:focus {
-  color: #fff;
-  background-color: var(--bs-dark);
-  border-color: #fff;
-  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+p {
+  font-family: 'Inter';
 }
 
-.bi {
-  vertical-align: -0.125em;
-  fill: currentColor;
-}
-
-.text-small {
-  font-size: 85%;
-}
-
-.dropdown-toggle {
-  outline: 0;
+span {
+  font-family: 'Inter';
 }
 </style>
