@@ -1,7 +1,9 @@
 <template>
-  <BHeader />
+  <PageHeader />
+  <NaviBar />
 </template>
 
 <script setup>
-import BHeader from '@/components/BHeader.vue'
+import PageHeader from '@/components/PageHeader.vue'
+import NaviBar from '@/components/NaviBar.vue'
 </script>

@@ -7,8 +7,8 @@ import { createApp } from 'vue'
 // import App from './views/SignupView.vue'
 // import App from './views/SignInView.vue'
 
-// import App from './App.vue'
-import App from './views/HomeView.vue'
+import App from './App.vue'
+// import App from './views/HomeView.vue'
 
 import router from './router'
 
