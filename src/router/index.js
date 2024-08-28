@@ -4,6 +4,7 @@ import SignInView from '../views/SignInView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import HomeView from '@/views/HomeView.vue'
 import ResoucesCenterView from '@/views/ResoucesCenterView.vue'
+import ResourceCenterArticle from '@/components/ResourceCenterArticle.vue'
 const routes = [
   {
     path: '/',
@@ -24,6 +25,10 @@ const routes = [
     path: '/resouces-center',
     name: 'ResoucesCenter',
     component: ResoucesCenterView
+  },
+  {
+    path: '/resouces-center/:id',
+    component: ResourceCenterArticle
   }
 ]
 
