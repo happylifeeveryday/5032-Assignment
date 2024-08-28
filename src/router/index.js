@@ -3,19 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import SignInView from '../views/SignInView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import HomeView from '@/views/HomeView.vue'
-
+import ResoucesCenterView from '@/views/ResoucesCenterView.vue'
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: HomeView
-  // },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: AboutView,
-  //   meta: { requiresAuth: true }
-  // },
   {
     path: '/',
     name: 'Home',
@@ -30,6 +19,11 @@ const routes = [
     path: '/signup',
     name: 'SignUp',
     component: SignUpView
+  },
+  {
+    path: '/resouces-center',
+    name: 'ResoucesCenter',
+    component: ResoucesCenterView
   }
 ]
 

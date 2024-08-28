@@ -5,8 +5,8 @@
     <div class="col-md-8 offset-md-2 col-10 offset-1">
       <div class="col-12 text-center h2">News and Updates</div>
       <div class="row">
-        <div class="col-md-4 d-none d-md-flex text-center">
-          <img class="img-fluid" src="../assets/home.jpg" alt="" />
+        <div class="col-md-4 d-none d-md-flex text-center p-4">
+          <img class="img-fluid" src="../assets/home.jpg" alt="" style="border-radius: 20px;"/>
         </div>
         <div class="col-md-8 col-12 d-flex flex-row align-items-center">
           <div class="col my-3 my-md-0">
@@ -39,5 +39,6 @@
 <style scoped>
 div {
   font-family: Inter;
+  color: white;
 }
 </style>

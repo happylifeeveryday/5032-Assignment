@@ -1,5 +1,5 @@
 <script setup>
-import isAuthenticated from '@/store'
+import {isAuthenticated} from '@/store'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -23,22 +23,22 @@ const logout = () => {
           <router-link to="/" class="nav-link">Homepage</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/signin" class="nav-link">Resouces Center</router-link>
+          <router-link to="/resouces-center" class="nav-link">Resouces Center</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/signup" class="nav-link">Support and Donations</router-link>
+          <router-link to="/support-donations" class="nav-link">Support and Donations</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/signup" class="nav-link">Community Forum</router-link>
+          <router-link to="/community-forum" class="nav-link">Community Forum</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/signup" class="nav-link">Activities and Projects</router-link>
+          <router-link to="/activities-projects" class="nav-link">Activities and Projects</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/signup" class="nav-link">FAQS</router-link>
+          <router-link to="/faqs" class="nav-link">FAQS</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/signup" class="nav-link">User Center</router-link>
+          <router-link to="/" class="nav-link">User Center</router-link>
         </li>
       </ul>
     </header>
