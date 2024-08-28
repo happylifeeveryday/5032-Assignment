@@ -19,3 +19,5 @@
 <script setup>
 import { pages } from '../store'
 </script>
+
+<style scoped></style>

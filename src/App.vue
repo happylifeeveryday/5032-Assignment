@@ -7,7 +7,7 @@ import BHeader from './components/NaviBar.vue'
   <router-view></router-view>
 </template>
 
-<style>
+<style scoped>
 h1,
 p {
   text-align: center;
