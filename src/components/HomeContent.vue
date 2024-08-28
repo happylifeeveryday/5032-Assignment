@@ -6,7 +6,7 @@
       <div class="col-12 text-center h2">News and Updates</div>
       <div class="row">
         <div class="col-md-4 d-none d-md-flex text-center p-4">
-          <img class="img-fluid" src="../assets/home.jpg" alt="" style="border-radius: 20px;"/>
+          <img class="img-fluid" src="../assets/home.jpg" alt="" style="border-radius: 20px" />
         </div>
         <div class="col-md-8 col-12 d-flex flex-row align-items-center">
           <div class="col my-3 my-md-0">

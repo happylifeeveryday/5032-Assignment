@@ -1,5 +1,5 @@
 <script setup>
-import {isAuthenticated} from '@/store'
+import { isAuthenticated } from '@/store'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -32,7 +32,9 @@ const logout = () => {
           <router-link to="/community-forum" class="nav-link">Community Forum</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/activities-projects" class="nav-link">Activities and Projects</router-link>
+          <router-link to="/activities-projects" class="nav-link"
+            >Activities and Projects</router-link
+          >
         </li>
         <li class="nav-item">
           <router-link to="/faqs" class="nav-link">FAQS</router-link>

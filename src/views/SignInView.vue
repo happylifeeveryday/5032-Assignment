@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {isAuthenticated} from '../store'
+import { isAuthenticated } from '../store'
 
 const router = useRouter()
 
