@@ -40,7 +40,7 @@ const logout = () => {
           <router-link to="/faqs" class="nav-link">FAQS</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/" class="nav-link">User Center</router-link>
+          <router-link to="/usercenter" class="nav-link">User Center</router-link>
         </li>
       </ul>
     </header>

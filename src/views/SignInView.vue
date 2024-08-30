@@ -136,7 +136,7 @@ const validateAuthenticated = () => {
               </button>
             </div>
           </form>
-          <p class="mb-4">
+          <p class="mb-4 text-center">
             Don't have an account?
             <strong
               @click="

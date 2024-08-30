@@ -30,8 +30,8 @@
 
     <div class="col-md-8 offset-md-2 text-center">
       <div class="col h2 mb-4">Contact Information</div>
-      <div class="col">Phone Number : XXXX XXX XXX</div>
-      <div class="col">Email : XXXXXXX@Gmail.com</div>
+      <div class="col">Phone Number : 0484 925 981</div>
+      <div class="col">Email : yihanshang@gmail.com</div>
     </div>
   </div>
 </template>

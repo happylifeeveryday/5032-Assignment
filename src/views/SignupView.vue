@@ -168,7 +168,7 @@ const validateConfirmPassword = (blur) => {
               </button>
             </div>
           </form>
-          <p class="mb-4">
+          <p class="mb-4 text-center">
             Already have an account?
             <strong
               @click="
