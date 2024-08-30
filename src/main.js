@@ -1,27 +1,18 @@
-// import './assets/main.css'
-// import '@/assets/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import Toast, { POSITION } from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
 import { createApp } from 'vue'
-// import App from './views/SignupView.vue'
-// import App from './views/SignInView.vue'
-
 import App from './App.vue'
-// import App from './views/HomeView.vue'
-
 import router from './router'
 
-import PrimeVue from 'primevue/config'
-import Aura from '@primevue/themes/aura'
-// import DataTable from 'primevue/datatable'
-// import Column from 'primevue/Column'
-
 const app = createApp(App)
-// app.use(PrimeVue, { theme: { preset: Aura } })
 app.use(router)
-
-// app.component('DataTable', DataTable)
-// app.component('Column', Column)
+app.use(Toast, {
+  position: POSITION.TOP_CENTER,
+  timeout: 2000,
+  hideProgressBar: false
+})
 
 app.mount('#app')

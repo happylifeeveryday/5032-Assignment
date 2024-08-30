@@ -2,17 +2,24 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { isAuthenticated } from '../store'
+import { useToast } from 'vue-toastification'
 
 const router = useRouter()
+const toast = useToast()
 
 const loginData = ref({
-  username: '',
+  email: '',
   password: ''
+})
+
+const errors = ref({
+  email: null,
+  password: null
 })
 
 const clearForm = () => {
   loginData.value = {
-    username: '',
+    email: '',
     password: ''
   }
 }
@@ -21,25 +28,20 @@ const loginFunc = () => {
   validateName(true)
   validatePassword(true)
   validateAuthenticated()
-  if (!errors.value.username && !errors.value.password && isAuthenticated.value) {
+  if (!errors.value.email && !errors.value.password && isAuthenticated.value) {
     alert('Login Successfully.')
     clearForm()
-  } else if (!errors.value.username && !errors.value.password) {
-    alert('Username and Password do not match!')
+  } else if (!errors.value.email && !errors.value.password) {
+    alert('Email and Password do not match!')
     clearForm()
   }
 }
 
-const errors = ref({
-  username: null,
-  password: null
-})
-
 const validateName = (blur) => {
-  if (loginData.value.username.length < 3) {
-    if (blur) errors.value.username = 'Name must be at least 3 characters'
+  if (loginData.value.email.length < 3) {
+    if (blur) errors.value.email = 'Name must be at least 3 characters'
   } else {
-    errors.value.username = null
+    errors.value.email = null
   }
 }
 
@@ -70,7 +72,7 @@ const validateAuthenticated = () => {
   const existingUsers = localStorage.getItem('users')
   let users = existingUsers ? JSON.parse(existingUsers) : []
   isAuthenticated.value = users.some((user) => {
-    return user.username === loginData.value.username && user.password === loginData.value.password
+    return user.email === loginData.value.email && user.password === loginData.value.password
   })
 }
 </script>
@@ -99,18 +101,18 @@ const validateAuthenticated = () => {
             Hey, enter your details to get sign in to your account
           </div>
           <form @submit.prevent="loginFunc">
-            <!-- USERNAME -->
+            <!-- Email -->
             <div class="col-8 offset-2 mb-3">
-              <label for="username" class="form-label">Username</label>
+              <label for="email" class="form-label">Email</label>
               <input
                 type="text"
                 class="form-control"
-                id="username"
+                id="email"
                 @blur="() => validateName(true)"
                 @input="() => validateName(false)"
-                v-model="loginData.username"
+                v-model="loginData.email"
               />
-              <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
+              <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
             </div>
             <!-- PASSWORD -->
             <div class="col-8 offset-2 mb-4">

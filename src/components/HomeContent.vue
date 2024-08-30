@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="row p-md-5 m-md-5 p-3 m-3" style="margin: 0; padding: 0">
+  <div class="row p-md-5 m-md-2 p-3 m-3" style="margin: 0; padding: 0">
     <div class="col-md-8 offset-md-2 col-10 offset-1">
       <div class="col-12 text-center h2">News and Updates</div>
       <div class="row">

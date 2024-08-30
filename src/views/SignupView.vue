@@ -1,60 +1,71 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+
+const router = useRouter()
+const toast = useToast()
+const isChecked = ref(false)
+const adminCode = ref('')
 
 const newUser = ref({
-  username: '',
+  email: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  isAdmin: false
+})
+
+const errors = ref({
+  email: null,
+  password: null,
+  confirmPassword: null
 })
 
 const clearForm = () => {
   newUser.value = {
-    username: '',
+    email: '',
     password: '',
     confirmPassword: ''
   }
 }
 
-const router = useRouter()
-
-const submitForm = () => {
+const signUp = () => {
   validateName(true)
   validatePassword(true)
   validateConfirmPassword(true)
-  if (!errors.value.username && !errors.value.password && !errors.value.confirmPassword) {
+  if (!errors.value.email && !errors.value.password && !errors.value.confirmPassword) {
+    if (isChecked.value && adminCode.value !== 'ADMIN') {
+      toast.error('Admin Code Invalid! Please Try Again.')
+      return
+    }
     // Steps 1 & 2: Check if ‘users’ exists in localStorage and read or create an array accordingly.
     const existingUsers = localStorage.getItem('users')
     let users = existingUsers ? JSON.parse(existingUsers) : []
 
     // Step 3: Check if a user with the same name already exists in the array
-    const userExists = users.some((user) => user.username === newUser.value.username)
+    const userExists = users.some((user) => user.email === newUser.value.email)
 
     // Step 4: Add a new user if the user name does not exist
     if (!userExists) {
+      newUser.value.isAdmin = isChecked.value && adminCode.value === 'ADMIN'
       users.push(newUser.value)
 
       // Step 5: Convert the updated array to a string and store it back to localStorage
       localStorage.setItem('users', JSON.stringify(users))
-      alert('sign up successfully.')
+      toast.success('Sign up successfully! Now you can Sign in.')
+      router.push('/signin')
     } else {
-      alert('User with this username already exists.')
+      toast.error('User with this email already exists! Please try again.')
     }
     clearForm()
   }
 }
 
-const errors = ref({
-  username: null,
-  password: null,
-  confirmPassword: null
-})
-
 const validateName = (blur) => {
-  if (newUser.value.username.length < 3) {
-    if (blur) errors.value.username = 'Name must be at least 3 characters.'
+  if (newUser.value.email.length < 3) {
+    if (blur) errors.value.email = 'Name must be at least 3 characters.'
   } else {
-    errors.value.username = null
+    errors.value.email = null
   }
 }
 
@@ -115,19 +126,19 @@ const validateConfirmPassword = (blur) => {
           <div class="col text-center mb-3">
             Hey, enter your details to get sign up to your account
           </div>
-          <form @submit.prevent="submitForm">
-            <!-- USERNAME -->
+          <form @submit.prevent="signUp">
+            <!-- Email -->
             <div class="col-8 offset-2 mb-3">
-              <label for="username" class="form-label">Username</label>
+              <label for="email" class="form-label">Email</label>
               <input
                 type="text"
                 class="form-control"
-                id="username"
+                id="email"
                 @blur="() => validateName(true)"
                 @input="() => validateName(false)"
-                v-model="newUser.username"
+                v-model="newUser.email"
               />
-              <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
+              <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
             </div>
             <!-- PASSWORD -->
             <div class="col-8 offset-2 mb-3">
@@ -157,8 +168,28 @@ const validateConfirmPassword = (blur) => {
                 {{ errors.confirmPassword }}
               </div>
             </div>
+
+            <!-- SIGN UP AS ADMIN -->
+            <div class="col-8 offset-2 d-flex justify-content-center">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" v-model="isChecked"/>
+                <label class="form-check-label" for="flexSwitchCheckDefault"
+                  >Sign Up as Admin?</label
+                >
+              </div>
+            </div>
+
+            <div v-if="isChecked" class="col-6 offset-3 mb-4">
+              <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Enter Admin Code" 
+                v-model="adminCode"
+              />
+            </div>
+
             <!-- BUTTON -->
-            <div class="text-center">
+            <div class="text-center mt-4">
               <button
                 type="submit"
                 class="btn btn-light col-md-3 col-5 mb-4"
@@ -203,5 +234,10 @@ const validateConfirmPassword = (blur) => {
 strong:hover {
   color: #006400;
   cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #360026;
+  border-color: #360026;
 }
 </style>
