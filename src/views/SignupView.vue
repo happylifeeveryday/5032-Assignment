@@ -30,7 +30,7 @@ const clearForm = () => {
 }
 
 const signUp = () => {
-  validateName(true)
+  validateEmail(true)
   validatePassword(true)
   validateConfirmPassword(true)
   if (!errors.value.email && !errors.value.password && !errors.value.confirmPassword) {
@@ -42,10 +42,10 @@ const signUp = () => {
     const existingUsers = localStorage.getItem('users')
     let users = existingUsers ? JSON.parse(existingUsers) : []
 
-    // Step 3: Check if a user with the same name already exists in the array
+    // Step 3: Check if a user with the same email already exists in the array
     const userExists = users.some((user) => user.email === newUser.value.email)
 
-    // Step 4: Add a new user if the user name does not exist
+    // Step 4: Add a new user if the user email does not exist
     if (!userExists) {
       newUser.value.isAdmin = isChecked.value && adminCode.value === 'ADMIN'
       users.push(newUser.value)
@@ -61,9 +61,11 @@ const signUp = () => {
   }
 }
 
-const validateName = (blur) => {
-  if (newUser.value.email.length < 3) {
-    if (blur) errors.value.email = 'Name must be at least 3 characters.'
+const validateEmail = (blur) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!emailPattern.test(newUser.value.email)) {
+    if (blur) errors.value.email = 'Please enter a valid email address.'
   } else {
     errors.value.email = null
   }
@@ -134,8 +136,8 @@ const validateConfirmPassword = (blur) => {
                 type="text"
                 class="form-control"
                 id="email"
-                @blur="() => validateName(true)"
-                @input="() => validateName(false)"
+                @blur="() => validateEmail(true)"
+                @input="() => validateEmail(false)"
                 v-model="newUser.email"
               />
               <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
@@ -172,7 +174,12 @@ const validateConfirmPassword = (blur) => {
             <!-- SIGN UP AS ADMIN -->
             <div class="col-8 offset-2 d-flex justify-content-center">
               <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" v-model="isChecked"/>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="flexSwitchCheckDefault"
+                  v-model="isChecked"
+                />
                 <label class="form-check-label" for="flexSwitchCheckDefault"
                   >Sign Up as Admin?</label
                 >
@@ -180,10 +187,10 @@ const validateConfirmPassword = (blur) => {
             </div>
 
             <div v-if="isChecked" class="col-6 offset-3 mb-4">
-              <input 
-                type="text" 
-                class="form-control" 
-                placeholder="Enter Admin Code" 
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Admin Code"
                 v-model="adminCode"
               />
             </div>

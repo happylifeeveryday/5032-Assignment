@@ -25,21 +25,38 @@ const clearForm = () => {
 }
 
 const loginFunc = () => {
-  validateName(true)
+  validateEmail(true)
   validatePassword(true)
-  validateAuthenticated()
-  if (!errors.value.email && !errors.value.password && isAuthenticated.value) {
-    alert('Login Successfully.')
-    clearForm()
-  } else if (!errors.value.email && !errors.value.password) {
-    alert('Email and Password do not match!')
-    clearForm()
+  if (!errors.value.email && !errors.value.password) {
+    const existingUsers = localStorage.getItem('users')
+    let users = existingUsers ? JSON.parse(existingUsers) : []
+
+    const user = users.find(
+      (user) => user.email === loginData.value.email && user.password === loginData.value.password
+    )
+
+    if (user) {
+      const currentUser = {
+        email: user.email,
+        isAdmin: user.isAdmin
+      }
+      localStorage.setItem('currentUser', JSON.stringify(currentUser))
+
+      toast.success('Login Successfully.')
+      clearForm()
+      router.push('/')
+    } else {
+      toast.error('Email and Password do not match!')
+      clearForm()
+    }
   }
 }
 
-const validateName = (blur) => {
-  if (loginData.value.email.length < 3) {
-    if (blur) errors.value.email = 'Name must be at least 3 characters'
+const validateEmail = (blur) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  if (!emailPattern.test(loginData.value.email)) {
+    if (blur) errors.value.email = 'Please enter a valid email address.'
   } else {
     errors.value.email = null
   }
@@ -66,14 +83,6 @@ const validatePassword = (blur) => {
   } else {
     errors.value.password = null
   }
-}
-
-const validateAuthenticated = () => {
-  const existingUsers = localStorage.getItem('users')
-  let users = existingUsers ? JSON.parse(existingUsers) : []
-  isAuthenticated.value = users.some((user) => {
-    return user.email === loginData.value.email && user.password === loginData.value.password
-  })
 }
 </script>
 
@@ -108,8 +117,8 @@ const validateAuthenticated = () => {
                 type="text"
                 class="form-control"
                 id="email"
-                @blur="() => validateName(true)"
-                @input="() => validateName(false)"
+                @blur="() => validateEmail(true)"
+                @input="() => validateEmail(false)"
                 v-model="loginData.email"
               />
               <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>

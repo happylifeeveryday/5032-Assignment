@@ -1,14 +1,7 @@
 <script setup>
-import { isAuthenticated } from '@/store'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const logout = () => {
-  isAuthenticated.value = false
-  if (router.currentRoute.value.name == 'About') {
-    router.push('/Login')
-  }
-}
 </script>
 
 <template>
