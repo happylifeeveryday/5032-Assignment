@@ -9,7 +9,7 @@ export function removeCurrentUser() {
   localStorage.removeItem('currentUser')
 }
 
-export const pages = [
+export const resoucesCenterPages = [
   {
     title: 'Basic Information and Guide for Migrants to Australia',
     content: `

@@ -40,8 +40,12 @@ const loginFunc = () => {
         isAdmin: user.isAdmin
       }
       localStorage.setItem('currentUser', JSON.stringify(currentUser))
+      if (user.isAdmin) {
+        toast.success('WELCOME ADMIN!')
+      } else {
+        toast.success('Login Successfully.')
+      }
 
-      toast.success('Login Successfully.')
       clearForm()
       router.push('/')
     } else {
