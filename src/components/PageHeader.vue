@@ -13,6 +13,7 @@ function showToastAndRefresh() {
   })
 }
 </script>
+
 <template>
   <div class="d-md-flex flex-md-row col-12" style="background-color: #b55e6c">
     <div class="me-auto mx-5 h3" style="color: #5b5361">Immigrant<br />Support</div>
