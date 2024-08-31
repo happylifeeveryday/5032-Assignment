@@ -94,7 +94,7 @@ const validatePassword = (blur) => {
     <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
       <div
         class="container p-4 p-md-5 rounded shadow-lg"
-        style="background-color: #6d3a5e; max-width: 500px;"
+        style="background-color: #6d3a5e; max-width: 500px"
       >
         <div class="d-flex justify-content-between align-items-center mb-3">
           <i
