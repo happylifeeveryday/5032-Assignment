@@ -20,4 +20,28 @@
 import { resoucesCenterPages } from '../store'
 </script>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 576px) {
+  .h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .h3 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .h3 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .h3 {
+    font-size: 1.8rem;
+  }
+}
+</style>
