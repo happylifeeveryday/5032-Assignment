@@ -1,12 +1,23 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import { getCurrentUser, removeCurrentUser } from '../store'
 const router = useRouter()
+const toast = useToast()
+const isLoggedIn = getCurrentUser()
+
+function showToastAndRefresh() {
+  return new Promise((resolve) => {
+    toast.success('Sign out successfully.')
+    setTimeout(resolve, 2000)
+  })
+}
 </script>
 <template>
   <div class="d-md-flex flex-md-row col-12" style="background-color: #b55e6c">
     <div class="me-auto mx-5 h3" style="color: #5b5361">Immigrant<br />Support</div>
     <div class="d-flex flex-row align-items-center mx-3">
-      <div class="col text-center">
+      <div class="col text-center" v-if="!isLoggedIn">
         <button
           class="px-5 py-2 btn mx-md-4 mx-2"
           @click="
@@ -26,6 +37,32 @@ const router = useRouter()
           "
         >
           Sign Up
+        </button>
+      </div>
+
+      <div class="col text-center" v-if="isLoggedIn">
+        <button
+          class="px-5 py-2 btn mx-md-4 mx-2"
+          @click="
+            () => {
+              router.push('/')
+            }
+          "
+        >
+          User Center
+        </button>
+        <button
+          class="px-5 py-2 btn"
+          @click="
+            () => {
+              removeCurrentUser()
+              showToastAndRefresh().then(() => {
+                router.go(0)
+              })
+            }
+          "
+        >
+          Sign out
         </button>
       </div>
     </div>

@@ -1,6 +1,13 @@
 import { ref } from 'vue'
 
-export const isAuthenticated = ref(false)
+export function getCurrentUser() {
+  const currentUser = localStorage.getItem('currentUser')
+  return currentUser ? JSON.parse(currentUser) : false
+}
+
+export function removeCurrentUser() {
+  localStorage.removeItem('currentUser')
+}
 
 export const pages = [
   {

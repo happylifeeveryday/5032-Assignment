@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { isAuthenticated } from '../store'
 import { useToast } from 'vue-toastification'
 
 const router = useRouter()
