@@ -6,8 +6,13 @@
   <div v-if="isAdmin" class="admin-ratings-section mt-5 mx-5 p-4">
     <h2 style="color: white">Admin Ratings Overview</h2>
     <ul class="mt-4">
-      <li v-for="page in resoucesCenterPages" :key="page.title" style="color: white; margin-bottom: 10px;">
-       {{ page.title }} got <strong>{{ getRatingsCount(page.title) }}</strong> rating with an average score of <strong>{{ getAverageRating(page.title) }}</strong>
+      <li
+        v-for="page in resoucesCenterPages"
+        :key="page.title"
+        style="color: white; margin-bottom: 10px"
+      >
+        {{ page.title }} got <strong>{{ getRatingsCount(page.title) }}</strong> rating with an
+        average score of <strong>{{ getAverageRating(page.title) }}</strong>
       </li>
     </ul>
   </div>
@@ -24,15 +29,15 @@ const currentUser = getCurrentUser()
 const isAdmin = computed(() => currentUser && currentUser.isAdmin)
 function getRatingsCount(title) {
   const ratings = JSON.parse(localStorage.getItem('ratings')) || []
-  return ratings.filter(rating => rating.title === title).length
+  return ratings.filter((rating) => rating.title === title).length
 }
 function getAverageRating(title) {
   const ratings = JSON.parse(localStorage.getItem('ratings')) || []
-  const titleRatings = ratings.filter(rating => rating.title === title)
+  const titleRatings = ratings.filter((rating) => rating.title === title)
   if (titleRatings.length === 0) return 0
-  
+
   const totalScore = titleRatings.reduce((sum, rating) => sum + rating.rating, 0)
-  return (totalScore / titleRatings.length).toFixed(1)  // 保留一位小数
+  return (totalScore / titleRatings.length).toFixed(1) // 保留一位小数
 }
 </script>
 
@@ -40,7 +45,7 @@ function getAverageRating(title) {
 .admin-ratings-section {
   background-color: #2c2c2c;
 }
-strong{
+strong {
   color: #b55e6c;
 }
 </style>

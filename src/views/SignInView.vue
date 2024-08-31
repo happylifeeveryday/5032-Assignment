@@ -91,86 +91,64 @@ const validatePassword = (blur) => {
 
 <template>
   <div class="row vh-100 vw-100 custom-background text-white">
-    <div class="col-md-6 d-flex align-items-center col-12">
-      <div class="container">
-        <div
-          class="col-10 offset-md-3 offset-1 col-md-8 offset-md-2"
-          style="border-radius: 30px; background-color: #6d3a5e"
-        >
-          <div class="h1 col offset-1 mb-3">
-            <i
-              class="bi bi-arrow-return-left"
-              @click="
-                () => {
-                  router.push('/')
-                }
-              "
-              style="cursor: pointer"
-            ></i>
-          </div>
-          <div class="h1 col text-center mb-3">Hello There</div>
-          <div class="col text-center mb-3">
-            Hey, enter your details to get sign in to your account
-          </div>
-          <form @submit.prevent="loginFunc">
-            <!-- Email -->
-            <div class="col-8 offset-2 mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input
-                type="text"
-                class="form-control"
-                id="email"
-                @blur="() => validateEmail(true)"
-                @input="() => validateEmail(false)"
-                v-model="loginData.email"
-              />
-              <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
-            </div>
-            <!-- PASSWORD -->
-            <div class="col-8 offset-2 mb-4">
-              <label for="password" class="form-label">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                @blur="() => validatePassword(true)"
-                @input="() => validatePassword(false)"
-                v-model="loginData.password"
-              />
-              <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
-            </div>
-            <!-- BUTTON -->
-            <div class="text-center col-12">
-              <button
-                type="submit"
-                class="btn btn-light col-md-3 col-5 mb-4"
-                style="color: #360026"
-              >
-                Sign In
-              </button>
-            </div>
-          </form>
-          <p class="mb-4 text-center">
-            Don't have an account?
-            <strong
-              @click="
-                () => {
-                  router.push('/signup')
-                }
-              "
-              >Sign up!</strong
-            >
-          </p>
-          <p><br /></p>
+    <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+      <div
+        class="container p-4 p-md-5 rounded shadow-lg"
+        style="background-color: #6d3a5e; max-width: 500px;"
+      >
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <i
+            class="bi bi-arrow-return-left fs-4"
+            @click="() => router.push('/')"
+            style="cursor: pointer"
+          ></i>
+          <h1 class="text-center m-0">Hello There</h1>
+          <span></span>
+          <!-- Empty span for layout symmetry -->
         </div>
+        <div class="text-center mb-3">
+          <p>Hey, enter your details to sign in to your account</p>
+        </div>
+        <form @submit.prevent="loginFunc">
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              @blur="() => validateEmail(true)"
+              @input="() => validateEmail(false)"
+              v-model="loginData.email"
+            />
+            <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
+          </div>
+          <!-- PASSWORD -->
+          <div class="mb-4">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              @blur="() => validatePassword(true)"
+              @input="() => validatePassword(false)"
+              v-model="loginData.password"
+            />
+            <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
+          </div>
+          <!-- BUTTON -->
+          <div class="text-center mb-4">
+            <button type="submit" class="btn btn-light w-50" style="color: #360026">Sign In</button>
+          </div>
+        </form>
+        <p class="text-center">
+          Don't have an account?
+          <strong @click="() => router.push('/signup')" style="cursor: pointer">Sign up!</strong>
+        </p>
       </div>
     </div>
-    <div class="col-md-6 align-items-center d-none d-md-flex">
-      <!-- <div class="container"> -->
-      <div class="col d-flex justify-content-center align-items-center">
-        <img src="../assets/pic.png" class="img-fluid col-7" alt="Image" />
-      </div>
-      <!-- </div> -->
+    <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center">
+      <img src="../assets/pic.png" class="img-fluid col-10 col-lg-7" alt="Image" />
     </div>
   </div>
 </template>
@@ -185,5 +163,29 @@ const validatePassword = (blur) => {
 strong:hover {
   color: #006400;
   cursor: pointer;
+}
+
+@media (max-width: 575.98px) {
+  .container {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .container {
+    padding: 30px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .container {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 700px;
+  }
 }
 </style>
