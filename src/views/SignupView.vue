@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const router = useRouter()
 const toast = useToast()
 const isChecked = ref(false)
 const adminCode = ref('')
+const auth = getAuth()
 
 const newUser = ref({
   email: '',
@@ -34,30 +36,15 @@ const signUp = () => {
   validatePassword(true)
   validateConfirmPassword(true)
   if (!errors.value.email && !errors.value.password && !errors.value.confirmPassword) {
-    if (isChecked.value && adminCode.value !== 'ADMIN') {
-      toast.error('Admin Code Invalid! Please Try Again.')
-      return
-    }
-    // Steps 1 & 2: Check if ‘users’ exists in localStorage and read or create an array accordingly.
-    const existingUsers = localStorage.getItem('users')
-    let users = existingUsers ? JSON.parse(existingUsers) : []
-
-    // Step 3: Check if a user with the same email already exists in the array
-    const userExists = users.some((user) => user.email === newUser.value.email)
-
-    // Step 4: Add a new user if the user email does not exist
-    if (!userExists) {
-      newUser.value.isAdmin = isChecked.value && adminCode.value === 'ADMIN'
-      users.push(newUser.value)
-
-      // Step 5: Convert the updated array to a string and store it back to localStorage
-      localStorage.setItem('users', JSON.stringify(users))
-      toast.success('Sign up successfully! Now you can Sign in.')
-      router.push('/signin')
-    } else {
-      toast.error('User with this email already exists! Please try again.')
-    }
-    clearForm()
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+      .then((userCredential) => {
+        console.log(userCredential)
+        toast.success('Sign up successfully! Now you can Sign in.')
+        router.push('/signin')
+      })
+      .catch((error) => {
+        toast.error(error.code)
+      })
   }
 }
 
