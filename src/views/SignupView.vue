@@ -31,20 +31,20 @@ const clearForm = () => {
   }
 }
 
-const signUp = () => {
+const signUp = async () => {
   validateEmail(true)
   validatePassword(true)
   validateConfirmPassword(true)
+
   if (!errors.value.email && !errors.value.password && !errors.value.confirmPassword) {
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-      .then((userCredential) => {
-        console.log(userCredential)
-        toast.success('Sign up successfully! Now you can Sign in.')
-        router.push('/signin')
-      })
-      .catch((error) => {
-        toast.error(error.code)
-      })
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
+      console.log(userCredential)
+      toast.success('Sign up successfully! Now you can Sign in.')
+      router.push('/signin')
+    } catch (error) {
+      toast.error(error.code)
+    }
   }
 }
 
