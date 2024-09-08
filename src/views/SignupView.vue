@@ -37,6 +37,18 @@ const signUp = async () => {
   validateConfirmPassword(true)
 
   if (!errors.value.email && !errors.value.password && !errors.value.confirmPassword) {
+    if (isChecked.value && adminCode.value) {
+      createUserWithEmailAndPassword(auth, email.value, password.value).then((userCredential) => {
+        const userId = userCredential.user.uid
+        return setCustomUserClaims({ userId: userId, adminCode: adminCode.value }).then(
+          (result) => {
+            alert(result.data.message)
+            router.push('/')
+          }
+        )
+      })
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
       console.log(userCredential)
