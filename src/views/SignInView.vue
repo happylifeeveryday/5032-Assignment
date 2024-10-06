@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 const router = useRouter()
 const toast = useToast()
+const auth = getAuth()
 
 const loginData = ref({
   email: '',
@@ -23,24 +25,36 @@ const clearForm = () => {
   }
 }
 
-const loginFunc = () => {
+const loginFunc = async () => {
   validateEmail(true)
   validatePassword(true)
   if (!errors.value.email && !errors.value.password) {
-    const existingUsers = localStorage.getItem('users')
-    let users = existingUsers ? JSON.parse(existingUsers) : []
+    try {
+      // Sign in with email and password using Firebase Authentication
+      const userCredential = await signInWithEmailAndPassword(auth, loginData.value.email, loginData.value.password)
+      const user = userCredential.user
+      
+      // Get ID token result to access custom claims
+      const idTokenResult = await user.getIdTokenResult()
+      const claims = idTokenResult.claims
 
-    const user = users.find(
-      (user) => user.email === loginData.value.email && user.password === loginData.value.password
-    )
+      // Determine if user is an admin based on custom claims
+      const isAdmin = claims.admin === true
 
-    if (user) {
+      // Store current user info in localStorage if needed
       const currentUser = {
         email: user.email,
-        isAdmin: user.isAdmin
+        isAdmin: isAdmin
       }
       localStorage.setItem('currentUser', JSON.stringify(currentUser))
-      if (user.isAdmin) {
+      
+      console.log(isAdmin)
+
+      const idToken = await user.getIdToken()
+      sessionStorage.setItem('idToken', idToken)
+
+      // Display appropriate success message
+      if (isAdmin) {
         toast.success('WELCOME ADMIN!')
       } else {
         toast.success('Login Successfully.')
@@ -48,7 +62,8 @@ const loginFunc = () => {
 
       clearForm()
       router.push('/')
-    } else {
+    } catch (error) {
+      // Handle errors
       toast.error('Email and Password do not match!')
       clearForm()
     }
