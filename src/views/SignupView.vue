@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { getFunctions, httpsCallable } from 'firebase/functions'
+const functions = getFunctions(undefined, 'australia-southeast1')
+const setCustomUserClaims = httpsCallable(functions, 'setCustomUserClaims')
 
 const router = useRouter()
 const toast = useToast()
@@ -37,28 +40,37 @@ const signUp = async () => {
   validateConfirmPassword(true)
 
   if (!errors.value.email && !errors.value.password && !errors.value.confirmPassword) {
-    if (isChecked.value && adminCode.value) {
-      createUserWithEmailAndPassword(auth, email.value, password.value).then((userCredential) => {
-        const userId = userCredential.user.uid
-        return setCustomUserClaims({ userId: userId, adminCode: adminCode.value }).then(
-          (result) => {
-            alert(result.data.message)
-            router.push('/')
-          }
-        )
-      })
-    }
-
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
-      console.log(userCredential)
-      toast.success('Sign up successfully! Now you can Sign in.')
-      router.push('/signin')
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        newUser.value.email,
+        newUser.value.password
+      )
+      const user = userCredential.user
+
+      if (isChecked.value && adminCode.value) {
+        await user.getIdToken(true)
+        await setCustomUserClaims({ userId: user.uid, adminCode: adminCode.value })
+          .then((result) => {
+            console.log('Cloud function call succeeded:', result)
+            toast.success(result.data.message)
+            router.push('/')
+          })
+          .catch((error) => {
+            console.error('Error calling cloud function:', error)
+            toast.error(`Failed to set admin privileges: ${error.message}`)
+          })
+      } else {
+        toast.success('Registration successful! You can now log in.')
+        router.push('/signin')
+      }
     } catch (error) {
-      toast.error(error.code)
+      console.error('Registration failed:', error)
+      toast.error(`Registration failed: ${error.message}`)
     }
   }
 }
+
 
 const validateEmail = (blur) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/

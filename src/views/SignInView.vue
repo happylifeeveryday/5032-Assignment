@@ -31,9 +31,13 @@ const loginFunc = async () => {
   if (!errors.value.email && !errors.value.password) {
     try {
       // Sign in with email and password using Firebase Authentication
-      const userCredential = await signInWithEmailAndPassword(auth, loginData.value.email, loginData.value.password)
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        loginData.value.email,
+        loginData.value.password
+      )
       const user = userCredential.user
-      
+      console.log(user)
       // Get ID token result to access custom claims
       const idTokenResult = await user.getIdTokenResult()
       const claims = idTokenResult.claims
@@ -47,8 +51,6 @@ const loginFunc = async () => {
         isAdmin: isAdmin
       }
       localStorage.setItem('currentUser', JSON.stringify(currentUser))
-      
-      console.log(isAdmin)
 
       const idToken = await user.getIdToken()
       sessionStorage.setItem('idToken', idToken)
