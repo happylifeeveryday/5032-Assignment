@@ -50,6 +50,15 @@
           filter
           filterPlaceholder="Search by created at"
         ></Column>
+        <Column header="Actions">
+          <template #body="slotProps">
+            <Button
+              label="Cancel"
+              class="p-button-danger"
+              @click="cancelAppointment(slotProps.data)"
+            />
+          </template>
+        </Column>
       </DataTable>
       <div class="mt-3">
         <Button label="Export CSV" icon="pi pi-file" @click="exportCSV" class="me-2"></Button>
@@ -96,6 +105,22 @@ const fetchAppointments = async () => {
   } catch (error) {
     console.error('Error fetching appointments:', error)
     toast.error('Failed to fetch appointments.')
+  } finally {
+    loading.value = false
+  }
+}
+
+const cancelAppointment = async (appointment) => {
+  try {
+    loading.value = true
+    const deleteAppointment = httpsCallable(functions, 'deleteAppointment')
+    await deleteAppointment({ appointmentId: appointment.id })
+    // Refresh the appointments list
+    await fetchAppointments()
+    toast.success('Appointment cancelled successfully.')
+  } catch (error) {
+    console.error('Error cancelling appointment:', error)
+    toast.error('Failed to cancel appointment.')
   } finally {
     loading.value = false
   }

@@ -122,3 +122,61 @@ exports.getAppointments = functions
         );
       }
     });
+
+exports.deleteAppointment = functions
+    .region("australia-southeast1")
+    .https.onCall(async (data, context) => {
+      // Check if the user is authenticated
+      if (!context.auth) {
+        throw new functions.https.HttpsError(
+            "unauthenticated",
+            "The user is not authenticated.",
+        );
+      }
+
+      const {appointmentId} = data;
+      const uid = context.auth.uid;
+
+      // Validate input data
+      if (!appointmentId) {
+        throw new functions.https.HttpsError(
+            "invalid-argument",
+            "No appointment ID provided.",
+        );
+      }
+
+      try {
+        // Retrieve appointment document reference
+        const appointmentRef = db.collection("appointments").doc(appointmentId);
+        const appointmentDoc = await appointmentRef.get();
+
+        if (!appointmentDoc.exists) {
+          throw new functions.https.HttpsError(
+              "not-found",
+              "Appointment not found.",
+          );
+        }
+
+        const appointmentData = appointmentDoc.data();
+
+        // Authorization check:
+        // only allow the user who created the appointment to delete it
+        if (appointmentData.uid !== uid) {
+          throw new functions.https.HttpsError(
+              "permission-denied",
+              "You do not have permission to delete this appointment.",
+          );
+        }
+
+        // Delete the appointment
+        await appointmentRef.delete();
+
+        return {success: true};
+      } catch (error) {
+        console.error("Error deleting appointment:", error);
+        throw new functions.https.HttpsError(
+            "internal",
+            "Failed to delete appointment.",
+        );
+      }
+    });
