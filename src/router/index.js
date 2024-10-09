@@ -7,6 +7,8 @@ import ResoucesCenterView from '@/views/ResoucesCenterView.vue'
 import ResourceCenterArticle from '@/components/ResourceCenterArticle.vue'
 import MapBox from '@/components/MapBox.vue'
 import ScheduleConsultation from '@/components/ScheduleConsultation.vue'
+import GetAllAppointments from '@/components/GetAllAppointments.vue'
+import GetAppointments from '@/components/GetAppointments.vue'
 const routes = [
   {
     path: '/',
@@ -34,11 +36,11 @@ const routes = [
   },
   {
     path: '/faqs',
-    component: MapBox
+    component: ScheduleConsultation
   },
   {
     path: '/immigration-consultation',
-    component: ScheduleConsultation
+    component: GetAllAppointments
   }
 ]
 

@@ -6,7 +6,15 @@ import 'vue-toastification/dist/index.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import PrimeVue from 'primevue/config'
 
+// Import PrimeVue themes and styles
+import 'primevue/resources/themes/saga-blue/theme.css'
+import 'primevue/resources/primevue.min.css'
+import 'primeicons/primeicons.css'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Button from 'primevue/button'
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFunctions } from 'firebase/functions'
@@ -35,5 +43,8 @@ app.use(Toast, {
   timeout: 2000,
   hideProgressBar: false
 })
-
+app.use(PrimeVue)
+app.component('DataTable', DataTable)
+app.component('Column', Column)
+app.component('Button', Button)
 app.mount('#app')
