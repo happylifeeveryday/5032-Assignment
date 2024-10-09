@@ -5,7 +5,7 @@
         v-for="(page, index) in resoucesCenterPages"
         :key="index"
         :to="`/resouces-center/${index + 1}`"
-        style="color: white; text-decoration: none"
+        style="text-decoration: none"
         class="h3"
       >
         <div class="p-3">

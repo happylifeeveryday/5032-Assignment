@@ -71,7 +71,6 @@ const signUp = async () => {
   }
 }
 
-
 const validateEmail = (blur) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 

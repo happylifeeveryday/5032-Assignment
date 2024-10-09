@@ -48,7 +48,6 @@
 
 div {
   font-family: 'Inter', sans-serif;
-  color: white;
 }
 
 p {

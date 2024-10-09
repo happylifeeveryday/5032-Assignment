@@ -15,8 +15,8 @@ function showToastAndRefresh() {
 </script>
 
 <template>
-  <div class="d-md-flex flex-md-row col-12" style="background-color: #b55e6c">
-    <div class="me-auto mx-5 h3" style="color: #5b5361">Immigrant<br />Support</div>
+  <div class="d-md-flex flex-md-row col-12" style="background-color: #f1ede9">
+    <div class="me-auto mx-5 h3">Immigrant<br />Support</div>
     <div class="d-flex flex-row align-items-center mx-3">
       <div class="col text-center" v-if="!isLoggedIn">
         <button
@@ -74,7 +74,7 @@ function showToastAndRefresh() {
 
 button {
   font-family: Inter;
-  background-color: #692642;
+  background-color: #a19a8d;
   color: white;
 }
 </style>

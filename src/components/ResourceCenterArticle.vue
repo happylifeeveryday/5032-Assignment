@@ -1,13 +1,9 @@
 <template>
   <PageHeader />
   <NaviBar />
-  <div
-    v-html="compiledMarkdown"
-    class="col-8 offset-2 my-5"
-    style="font-family: 'Inter'; color: white"
-  ></div>
+  <div v-html="compiledMarkdown" class="col-8 offset-2 my-5" style="font-family: 'Inter'"></div>
   <div class="rating text-center">
-    <div style="color: white" class="h5">Does this information help you?</div>
+    <div class="h5">Does this information help you?</div>
     <!-- 创建五个星星，使用循环 -->
     <span
       v-for="star in 5"

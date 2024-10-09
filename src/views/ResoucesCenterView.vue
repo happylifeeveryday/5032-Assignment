@@ -6,11 +6,7 @@
   <div v-if="isAdmin" class="admin-ratings-section mt-5 mx-5 p-4">
     <h2 style="color: white">Admin Ratings Overview</h2>
     <ul class="mt-4">
-      <li
-        v-for="page in resoucesCenterPages"
-        :key="page.title"
-        style="color: white; margin-bottom: 10px"
-      >
+      <li v-for="page in resoucesCenterPages" :key="page.title" style="margin-bottom: 10px">
         {{ page.title }} got <strong>{{ getRatingsCount(page.title) }}</strong> rating with an
         average score of <strong>{{ getAverageRating(page.title) }}</strong>
       </li>
@@ -46,6 +42,6 @@ function getAverageRating(title) {
   background-color: #2c2c2c;
 }
 strong {
-  color: #b55e6c;
+  color: #f1ede9;
 }
 </style>
