@@ -138,6 +138,10 @@ const exportPDF = () => {
 onMounted(() => {
   fetchAppointments()
 })
+
+defineExpose({
+  fetchAppointments
+})
 </script>
 
 <style scoped>

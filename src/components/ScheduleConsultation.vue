@@ -1,29 +1,31 @@
 <template>
   <div class="container">
-    <h2 class="mt-4">Schedule an In-person Consultation</h2>
-    <form @submit.prevent="submitAppointment" class="mt-3">
-      <div class="mb-3">
-        <label for="date" class="form-label">Select Date</label>
-        <input
-          type="date"
-          id="date"
-          v-model="appointmentDate"
-          class="form-control"
-          :min="today"
-          required
-        />
-      </div>
-      <div class="mb-3">
-        <label for="time" class="form-label">Select Time</label>
-        <select id="time" v-model="appointmentTime" class="form-control" required>
-          <option disabled value="">Please select a time</option>
-          <option v-for="time in availableTimes" :key="time" :value="time">
-            {{ time }}
-          </option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Schedule Appointment</button>
-    </form>
+    <div class="col-6 offset-3">
+      <h2 class="mt-4 text-center">Schedule an In-person Consultation</h2>
+      <form @submit.prevent="submitAppointment" class="mt-3 text-center">
+        <div class="mb-3">
+          <label for="date" class="form-label">Select Date</label>
+          <input
+            type="date"
+            id="date"
+            v-model="appointmentDate"
+            class="form-control"
+            :min="today"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="time" class="form-label">Select Time</label>
+          <select id="time" v-model="appointmentTime" class="form-control" required>
+            <option disabled value="">Please select a time</option>
+            <option v-for="time in availableTimes" :key="time" :value="time">
+              {{ time }}
+            </option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Schedule Appointment</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -33,6 +35,7 @@ import { useToast } from 'vue-toastification'
 import { httpsCallable } from 'firebase/functions'
 import { auth, functions } from '@/main'
 
+const emit = defineEmits(['appointment-scheduled'])
 const appointmentDate = ref('')
 const appointmentTime = ref('')
 const availableTimes = ref([])
@@ -92,6 +95,7 @@ const submitAppointment = async () => {
     const scheduleAppointment = httpsCallable(functions, 'scheduleAppointment')
     await scheduleAppointment(data)
     toast.success('Appointment scheduled successfully!')
+    emit('appointment-scheduled')
     // Clear the form
     appointmentDate.value = ''
     appointmentTime.value = ''
