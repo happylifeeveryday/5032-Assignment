@@ -2,16 +2,15 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
-import { getFunctions, httpsCallable } from 'firebase/functions'
-const functions = getFunctions(undefined, 'australia-southeast1')
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { httpsCallable } from 'firebase/functions'
+import { auth, functions } from '@/main'
 const setCustomUserClaims = httpsCallable(functions, 'setCustomUserClaims')
 
 const router = useRouter()
 const toast = useToast()
 const isChecked = ref(false)
 const adminCode = ref('')
-const auth = getAuth()
 
 const newUser = ref({
   email: '',

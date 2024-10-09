@@ -8,6 +8,9 @@ import App from './App.vue'
 import router from './router'
 
 import { initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
+import { getFunctions } from 'firebase/functions'
+import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -20,6 +23,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 initializeApp(firebaseConfig)
+const auth = getAuth()
+const functions = getFunctions(undefined, 'australia-southeast1')
+const db = getFirestore()
+export { auth, functions, db }
 
 const app = createApp(App)
 app.use(router)

@@ -2,11 +2,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@/main'
 
 const router = useRouter()
 const toast = useToast()
-const auth = getAuth()
 
 const loginData = ref({
   email: '',
@@ -38,22 +38,13 @@ const loginFunc = async () => {
       )
       const user = userCredential.user
       console.log(user)
+
       // Get ID token result to access custom claims
       const idTokenResult = await user.getIdTokenResult()
       const claims = idTokenResult.claims
 
       // Determine if user is an admin based on custom claims
       const isAdmin = claims.admin === true
-
-      // Store current user info in localStorage if needed
-      const currentUser = {
-        email: user.email,
-        isAdmin: isAdmin
-      }
-      localStorage.setItem('currentUser', JSON.stringify(currentUser))
-
-      const idToken = await user.getIdToken()
-      sessionStorage.setItem('idToken', idToken)
 
       // Display appropriate success message
       if (isAdmin) {
