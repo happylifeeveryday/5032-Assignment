@@ -193,7 +193,7 @@ const validateConfirmPassword = (blur) => {
           </div>
           <div v-if="isChecked" class="mb-4">
             <input
-              type="text"
+              type="password"
               class="form-control"
               placeholder="Enter Admin Code"
               v-model="adminCode"
