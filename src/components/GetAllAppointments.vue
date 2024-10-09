@@ -57,6 +57,11 @@
           filter
           filterPlaceholder="Search by created at"
         ></Column>
+        <Column header="Actions">
+          <template #body="slotProps">
+            <Button label="Notify by Email" @click="notifyByEmail(slotProps.data)"></Button>
+          </template>
+        </Column>
       </DataTable>
       <div class="mt-3">
         <Button label="Export CSV" icon="pi pi-file" @click="exportCSV" class="me-2"></Button>
@@ -105,6 +110,17 @@ const fetchAllAppointments = async () => {
     toast.error('Failed to fetch appointments.')
   } finally {
     loading.value = false
+  }
+}
+
+const notifyByEmail = async (appointment) => {
+  try {
+    const sendAppointmentNotification = httpsCallable(functions, 'sendAppointmentNotification')
+    await sendAppointmentNotification({ appointment })
+    toast.success(`Email sent to ${appointment.userEmail}`)
+  } catch (error) {
+    console.error('Error sending email:', error)
+    toast.error('Failed to send email.')
   }
 }
 

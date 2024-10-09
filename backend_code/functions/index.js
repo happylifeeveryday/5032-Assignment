@@ -180,3 +180,64 @@ exports.deleteAppointment = functions
         );
       }
     });
+
+const sgMail = require("@sendgrid/mail");
+const SENDGRID_API_KEY =
+    "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";
+sgMail.setApiKey(SENDGRID_API_KEY);
+
+exports.sendAppointmentNotification = functions
+    .region("australia-southeast1")
+    .https.onCall(async (data, context) => {
+    // Verify the user is authenticated
+      if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated",
+            "User must be authenticated.");
+      }
+
+      // Verify the user is an admin
+      const uid = context.auth.uid;
+      const userRecord = await admin.auth().getUser(uid);
+      const customClaims = userRecord.customClaims || {};
+      if (customClaims.role !== "admin") {
+        throw new functions.https.HttpsError("permission-denied",
+            "User does not have permission to send emails.");
+      }
+
+      const appointment = data.appointment;
+      if (!appointment) {
+        throw new functions.https.HttpsError("invalid-argument",
+            "Appointment data is required.");
+      }
+
+      const msg = {
+        to: appointment.userEmail,
+        from: "yihanshang0@gmail.com",
+        subject: "Appointment Confirmation",
+        text: `Hello,
+
+This is to inform you that your appointment scheduled at 
+${appointment.createdAt} has been successfully booked.
+ The appointment date and time are ${appointment.appointmentDate}
+  at ${appointment.appointmentTime}.
+
+Thank you,
+Your Company`,
+        html: `<p>Hello,</p>
+<p>This is to inform you that your appointment scheduled at 
+<strong>${appointment.createdAt}</strong> 
+has been successfully booked. The appointment date and time are
+ <strong>${appointment.appointmentDate}</strong> 
+at <strong>${appointment.appointmentTime}</strong>.</p>
+<p>Thank you,<br/>Immigration Center</p>`,
+      };
+
+      try {
+        await sgMail.send(msg);
+        return {success: true};
+      } catch (error) {
+        console.error("Error sending email:", error);
+        throw new functions.https.HttpsError("internal",
+            "Failed to send email.");
+      }
+    });

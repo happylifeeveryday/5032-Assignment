@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import { auth } from '@/main'
+import { useToast } from 'vue-toastification'
 import SignInView from '@/views/SignInView.vue'
 import SignUpView from '@/views/SignupView.vue'
 import HomeView from '@/views/HomeView.vue'
@@ -12,6 +13,7 @@ import GetAppointments from '@/components/GetAppointments.vue'
 import ConsultationView from '@/views/ConsultationView.vue'
 import ImmiCenterInfo from '../views/ImmiCenterInfo.vue'
 import AdminDashboardView from '@/views/AdminDashboardView.vue'
+const toast = useToast()
 const routes = [
   {
     path: '/',
@@ -43,6 +45,7 @@ const routes = [
   },
   {
     path: '/immigration-consultation',
+    meta: { requiresAuth: true },
     component: ConsultationView
   },
   {
@@ -60,13 +63,18 @@ const router = createRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.requiresAuth && !isAuthenticated.value) {
-//     alert('You Must Login First!')
-//     next({ name: 'Login' })
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const user = auth.currentUser
+    if (user) {
+      next()
+    } else {
+      toast.error('You must log in first to access this page.')
+      next({ name: 'SignIn' })
+    }
+  } else {
+    next()
+  }
+})
 
 export default router
