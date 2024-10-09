@@ -18,8 +18,8 @@
             <div class="my-3 my-md-0">
               <div class="h4 text-center mb-3">Immigrant Population</div>
               <p>
-                The number of foreigners immigrating to Australia is increasing year by year, with
-                Indians and Chinese making up the largest majority.
+                The number of immigrants moving to Australia has been increasing each year, with
+                significant numbers arriving from a diverse array of countries around the world.
               </p>
             </div>
           </div>

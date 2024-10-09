@@ -2,18 +2,25 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import { auth } from '@/main' // Ensure correct import of Firebase Auth instance
+import { auth } from '@/main'
 import { signOut, onAuthStateChanged } from 'firebase/auth'
 
 const router = useRouter()
 const toast = useToast()
 
-// Define a reactive variable to track user login status
+// Define reactive variables to track user login status and admin role
 const isLoggedIn = ref(false)
+const isAdmin = ref(false)
 
 // Listen to authentication state changes in Firebase Auth
-const unsubscribe = onAuthStateChanged(auth, (user) => {
+const unsubscribe = onAuthStateChanged(auth, async (user) => {
   isLoggedIn.value = !!user
+  if (user) {
+    const idTokenResult = await user.getIdTokenResult()
+    isAdmin.value = idTokenResult.claims.role === 'admin'
+  } else {
+    isAdmin.value = false
+  }
 })
 
 onMounted(() => {})
@@ -46,7 +53,14 @@ const handleSignOut = async () => {
         <button class="px-5 py-2 btn" @click="() => router.push('/signup')">Sign Up</button>
       </div>
 
-      <div class="col text-center" v-if="isLoggedIn">
+      <div class="col text-center" v-else-if="isAdmin">
+        <button class="px-5 py-2 btn mx-md-4 mx-2" @click="() => router.push('/admin-dashboard')">
+          Admin Dashboard
+        </button>
+        <button class="px-5 py-2 btn" @click="handleSignOut">Sign Out</button>
+      </div>
+
+      <div class="col text-center" v-else>
         <button class="px-5 py-2 btn mx-md-4 mx-2" @click="() => router.push('/user-center')">
           User Center
         </button>
