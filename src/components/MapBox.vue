@@ -1,15 +1,17 @@
 <template>
-  <div ref="mapContainer" class="map-container"></div>
-  <div class="location-list" :class="{ 'is-collapsed': isCollapsed }">
-    <button class="toggle-button btn btn-primary" @click="toggleList">
-      {{ isCollapsed ? 'Expand List' : 'Collapse List' }}
-    </button>
-    <ul v-if="!isCollapsed">
-      <li v-for="location in locations" :key="location.id" @click="getRoute(location)">
-        {{ location.name }}
-      </li>
-    </ul>
-    <div id="calculated-area" v-if="!isCollapsed"></div>
+  <div class="map-wrapper">
+    <div class="location-list" :class="{ 'is-collapsed': isCollapsed }">
+      <button class="toggle-button btn btn-primary" @click="toggleList">
+        {{ isCollapsed ? 'Expand List' : 'Collapse List' }}
+      </button>
+      <ul v-if="!isCollapsed">
+        <li v-for="location in locations" :key="location.id" @click="getRoute(location)">
+          {{ location.name }}
+        </li>
+      </ul>
+      <div id="calculated-area" v-if="!isCollapsed"></div>
+    </div>
+    <div ref="mapContainer" class="map-container"></div>
   </div>
 </template>
 
@@ -215,19 +217,23 @@ async function getRoute(location) {
 </script>
 
 <style scoped>
+.map-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
 .map-container {
+  flex: 1;
   width: 100%;
   height: 100vh;
 }
 
 .location-list {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  width: 300px;
+  overflow-y: auto;
   background: rgba(255, 255, 255, 0.9);
   padding: 15px;
   border-radius: 8px;
-  max-width: 300px;
 }
 
 .location-list ul {

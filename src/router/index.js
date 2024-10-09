@@ -10,6 +10,7 @@ import ScheduleConsultation from '@/components/ScheduleConsultation.vue'
 import GetAllAppointments from '@/components/GetAllAppointments.vue'
 import GetAppointments from '@/components/GetAppointments.vue'
 import ConsultationView from '@/views/ConsultationView.vue'
+import ImmiCenterInfo from '../views/ImmiCenterInfo.vue'
 const routes = [
   {
     path: '/',
@@ -41,7 +42,7 @@ const routes = [
   },
   {
     path: '/immigration-consultation',
-    component: ConsultationView
+    component: ImmiCenterInfo
   }
 ]
 

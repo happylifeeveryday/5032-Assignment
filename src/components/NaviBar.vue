@@ -44,7 +44,9 @@ const toggleNavbar = () => {
             >
           </li>
           <li class="nav-item">
-            <router-link to="/community-forum" class="nav-link px-3">Community Forum</router-link>
+            <router-link to="/community-forum" class="nav-link px-3"
+              >Immigration Center Info</router-link
+            >
           </li>
           <li class="nav-item">
             <router-link to="/activities-projects" class="nav-link px-3"
