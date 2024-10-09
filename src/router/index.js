@@ -42,6 +42,10 @@ const routes = [
   },
   {
     path: '/immigration-consultation',
+    component: ConsultationView
+  },
+  {
+    path: '/immi-center-info',
     component: ImmiCenterInfo
   }
 ]
