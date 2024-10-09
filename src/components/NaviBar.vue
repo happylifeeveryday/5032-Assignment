@@ -39,8 +39,8 @@ const toggleNavbar = () => {
             <router-link to="/resouces-center" class="nav-link px-3">Resources Center</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/support-donations" class="nav-link px-3"
-              >Support and Donations</router-link
+            <router-link to="/immigration-consultation" class="nav-link px-3"
+              >Immigration Consultation</router-link
             >
           </li>
           <li class="nav-item">
