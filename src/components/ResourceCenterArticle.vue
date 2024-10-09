@@ -17,7 +17,7 @@
       <i :class="star <= (hoveredRating || rating) ? 'bi bi-star-fill' : 'bi bi-star'"></i>
     </span>
     <!-- 显示当前的评分 -->
-    <div v-if="rating > 0 || hoveredRating > 0" class="h3" style="color: white; font-size: 20px">
+    <div v-if="rating > 0 || hoveredRating > 0" class="h3" style="font-size: 20px">
       {{ hoveredRating || rating }}/5
     </div>
   </div>
