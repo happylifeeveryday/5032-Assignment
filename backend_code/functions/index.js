@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const fetch = require("node-fetch");
 admin.initializeApp();
 const db = admin.firestore();
 
@@ -239,5 +240,50 @@ at <strong>${appointment.appointmentTime}</strong>.</p>
         console.error("Error sending email:", error);
         throw new functions.https.HttpsError("internal",
             "Failed to send email.");
+      }
+    });
+
+
+exports.callAI = functions
+    .region("australia-southeast1")
+    .https.onCall(async (data, context) => {
+      if (!context.auth) {
+        throw new functions.https.HttpsError(
+            "unauthenticated",
+            "User must be authenticated to use this function.",
+        );
+      }
+
+      const model = "@cf/meta/llama-3-8b-instruct";
+      const input = data.input;
+
+      try {
+        const response = await fetch(
+            `https://api.cloudflare.com/client/v4/accounts/1e446522e62f496f6dc6d89b7b751d9a/ai/run/${model}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization":
+                "Bearer cr6S7ac1PJ_HuaNGDmPJg-9VoGVvo_6wMRZVL65e",
+              },
+              body: JSON.stringify(input),
+            },
+        );
+
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("AI API response:", result);
+        return {result};
+      } catch (error) {
+        console.error("Error calling AI API:", error);
+        throw new functions.https.HttpsError(
+            "internal",
+            "Failed to call AI API.",
+            error.message,
+        );
       }
     });

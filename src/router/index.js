@@ -13,6 +13,7 @@ import GetAppointments from '@/components/GetAppointments.vue'
 import ConsultationView from '@/views/ConsultationView.vue'
 import ImmiCenterInfo from '../views/ImmiCenterInfo.vue'
 import AdminDashboardView from '@/views/AdminDashboardView.vue'
+import AIConsultantView from '@/views/AIConsultantView.vue'
 const toast = useToast()
 const routes = [
   {
@@ -41,7 +42,7 @@ const routes = [
   },
   {
     path: '/faqs',
-    component: ScheduleConsultation
+    component: AIConsultantView
   },
   {
     path: '/immigration-consultation',
@@ -55,6 +56,11 @@ const routes = [
   {
     path: '/admin-dashboard',
     component: AdminDashboardView
+  },
+  {
+    path: '/AIConsultant',
+    component: AIConsultantView,
+    meta: { requiresAuth: true },
   }
 ]
 
