@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <h2 class="mt-4">All Users</h2>
+    <h2 class="mt-4 d-flex align-items-center">
+      All Users
+    </h2>
+    <Button
+        label="Notify all users by email"
+        @click="openNotificationDialog"
+      ></Button>
     <div class="card mt-3">
       <!-- Global Search Input -->
       <div class="input-group mb-3">
@@ -57,6 +63,38 @@
         <Button label="Export PDF" icon="pi pi-file-pdf" @click="exportPDF"></Button>
       </div>
     </div>
+
+    <!-- Notification Dialog -->
+    <Dialog
+      header="Send Notification to All Users"
+      v-model:visible="notificationDialogVisible"
+      :modal="true"
+      :closable="false"
+    >
+      <div class="p-field">
+        <label for="notificationMessage">Message</label>
+        <Textarea
+          id="notificationMessage"
+          v-model="notificationMessage"
+          rows="5"
+          cols="30"
+          autoResize
+        ></Textarea>
+      </div>
+      <div class="mt-3 d-flex justify-content-end">
+        <Button
+          label="Cancel"
+          class="p-button-text"
+          @click="notificationDialogVisible = false"
+        ></Button>
+        <Button
+          label="Send"
+          :disabled="!notificationMessage"
+          @click="sendNotification"
+          class="ms-2"
+        ></Button>
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -70,6 +108,8 @@ import { auth, functions } from '@/main'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
+import Textarea from 'primevue/textarea'
 
 // Import jsPDF for PDF export
 import jsPDF from 'jspdf'
@@ -82,6 +122,10 @@ const filters = ref({})
 const globalFilter = ref('')
 const dt = ref(null) // Reference to DataTable
 const filteredData = ref(null) // Holds the filtered data
+
+// Variables for notification dialog
+const notificationDialogVisible = ref(false)
+const notificationMessage = ref('')
 
 const fetchAllUsers = async () => {
   loading.value = true
@@ -99,6 +143,31 @@ const fetchAllUsers = async () => {
   } catch (error) {
     console.error('Error fetching users:', error)
     toast.error('Failed to fetch users.')
+  } finally {
+    loading.value = false
+  }
+}
+
+const openNotificationDialog = () => {
+  notificationMessage.value = ''
+  notificationDialogVisible.value = true
+}
+
+const sendNotification = async () => {
+  if (!notificationMessage.value) {
+    toast.error('Please enter a message.')
+    return
+  }
+
+  loading.value = true
+  try {
+    const sendNotificationToAllUsers = httpsCallable(functions, 'sendNotificationToAllUsers')
+    await sendNotificationToAllUsers({ message: notificationMessage.value })
+    toast.success('Notification sent to all users.')
+    notificationDialogVisible.value = false
+  } catch (error) {
+    console.error('Error sending notification:', error)
+    toast.error('Failed to send notification.')
   } finally {
     loading.value = false
   }

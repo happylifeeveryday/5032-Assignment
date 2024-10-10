@@ -243,6 +243,79 @@ at <strong>${appointment.appointmentTime}</strong>.</p>
       }
     });
 
+exports.sendNotificationToAllUsers = functions
+    .region("australia-southeast1")
+    .https.onCall(async (data, context) => {
+      // Verify the user is authenticated
+      if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated",
+            "User must be authenticated.");
+      }
+
+      // Verify the user is an admin
+      const uid = context.auth.uid;
+      const userRecord = await admin.auth().getUser(uid);
+      const customClaims = userRecord.customClaims || {};
+      if (customClaims.role !== "admin") {
+        throw new functions.https.HttpsError("permission-denied",
+            "User does not have permission to send emails.");
+      }
+
+      const message = data.message;
+      if (!message) {
+        throw new functions.https.HttpsError("invalid-argument",
+            "Message is required.");
+      }
+
+      try {
+        // Fetch all users
+        const allUsers = await getAllUsers();
+        const emails = allUsers
+            .map((userRecord) => userRecord.email)
+            .filter((email) => !!email); // Exclude users without email
+
+        // Send emails in batches
+        const batchSize = 50;
+        for (let i = 0; i < emails.length; i += batchSize) {
+          const batchEmails = emails.slice(i, i + batchSize);
+
+          const personalizations = batchEmails.map((email) => ({
+            to: [{email}],
+          }));
+
+          const msg = {
+            personalizations: personalizations,
+            from: "yihanshang0@gmail.com",
+            subject: "Notification from Immigration Center",
+            text: message,
+            html: `<p>${message}</p>`,
+          };
+
+          await sgMail.send(msg);
+        }
+
+        return {success: true};
+      } catch (error) {
+        console.error("Error sending notification emails:", error);
+        throw new functions.https.HttpsError("internal",
+            "Failed to send notification emails.");
+      }
+    });
+
+// Helper function to get all users
+const getAllUsers = async () => {
+  const users = [];
+  let nextPageToken;
+
+  do {
+    const listUsersResult = await admin.auth().listUsers(1000, nextPageToken);
+    users.push(...listUsersResult.users);
+    nextPageToken = listUsersResult.pageToken;
+  } while (nextPageToken);
+
+  return users;
+};
+
 
 exports.callAI = functions
     .region("australia-southeast1")
