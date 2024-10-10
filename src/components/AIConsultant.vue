@@ -11,9 +11,7 @@
         placeholder="Input your question"
       />
     </div>
-    <button class="btn btn-primary" @click="sendToAI" :disabled="loading">
-      Generate Answer
-    </button>
+    <button class="btn btn-primary" @click="sendToAI" :disabled="loading">Generate Answer</button>
     <div v-if="loading" class="mt-3">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -28,23 +26,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { httpsCallable } from 'firebase/functions';
-import { functions } from '@/main'; 
-import { useToast } from 'vue-toastification';
-import { marked } from 'marked'; // Import the markdown parser
+import { ref } from 'vue'
+import { httpsCallable } from 'firebase/functions'
+import { functions } from '@/main'
+import { useToast } from 'vue-toastification'
+import { marked } from 'marked' // Import the markdown parser
 
-const userInput = ref('');
-const responseContent = ref('');
-const loading = ref(false);
-const toast = useToast();
+const userInput = ref('')
+const responseContent = ref('')
+const loading = ref(false)
+const toast = useToast()
 
 const sendToAI = async () => {
-  if (!userInput.value) return;
-  loading.value = true;
-  responseContent.value = '';
+  if (!userInput.value) return
+  loading.value = true
+  responseContent.value = ''
 
-  const callAI = httpsCallable(functions, 'callAI');
+  const callAI = httpsCallable(functions, 'callAI')
 
   try {
     const aiResponse = await callAI({
@@ -52,28 +50,28 @@ const sendToAI = async () => {
         messages: [
           {
             role: 'system',
-            content: 'You are a friendly AI that provides advice on immigration to Australia for people from all around the world.',
+            content:
+              'You are a friendly AI that provides advice on immigration to Australia for people from all around the world.'
           },
           {
             role: 'user',
-            content: userInput.value,
-          },
-        ],
-      },
-    });
+            content: userInput.value
+          }
+        ]
+      }
+    })
 
-    console.log("AI Response:", aiResponse);
+    console.log('AI Response:', aiResponse)
 
     // Update this line to correctly access the nested response
-    responseContent.value = marked(aiResponse.data.result.result.response);
+    responseContent.value = marked(aiResponse.data.result.result.response)
   } catch (error) {
-    console.error('Error calling AI function:', error);
-    toast.error('An error occurred while generating the answer.');
+    console.error('Error calling AI function:', error)
+    toast.error('An error occurred while generating the answer.')
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

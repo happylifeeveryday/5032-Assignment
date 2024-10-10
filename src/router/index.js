@@ -14,6 +14,7 @@ import ConsultationView from '@/views/ConsultationView.vue'
 import ImmiCenterInfo from '../views/ImmiCenterInfo.vue'
 import AdminDashboardView from '@/views/AdminDashboardView.vue'
 import AIConsultantView from '@/views/AIConsultantView.vue'
+import FAQView from '@/views/FAQView.vue'
 const toast = useToast()
 const routes = [
   {
@@ -41,8 +42,8 @@ const routes = [
     component: ResourceCenterArticle
   },
   {
-    path: '/faqs',
-    component: AIConsultantView
+    path: '/faq',
+    component: FAQView
   },
   {
     path: '/immigration-consultation',
@@ -60,7 +61,7 @@ const routes = [
   {
     path: '/AIConsultant',
     component: AIConsultantView,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true }
   }
 ]
 

@@ -49,12 +49,10 @@ const toggleNavbar = () => {
             >
           </li>
           <li class="nav-item">
-            <router-link to="/AIConsultant" class="nav-link px-3"
-              >AI Consultant</router-link
-            >
+            <router-link to="/AIConsultant" class="nav-link px-3">AI Consultant</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/faqs" class="nav-link px-3">FAQs</router-link>
+            <router-link to="/faq" class="nav-link px-3">FAQ</router-link>
           </li>
         </ul>
       </div>

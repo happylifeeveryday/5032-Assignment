@@ -61,9 +61,6 @@ const handleSignOut = async () => {
       </div>
 
       <div class="col text-center" v-else>
-        <button class="px-5 py-2 btn mx-md-4 mx-2" @click="() => router.push('/user-center')">
-          User Center
-        </button>
         <button class="px-5 py-2 btn" @click="handleSignOut">Sign Out</button>
       </div>
     </div>
