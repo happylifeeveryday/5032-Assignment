@@ -25,8 +25,7 @@ import * as turf from '@turf/turf'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 // Mapbox Access Token
-mapboxgl.accessToken =
-  'pk.eyJ1IjoieWloYW5zaGFuZzAiLCJhIjoiY20yMTgxYTFiMGVkOTJ4cHBibXFxeWUyeCJ9.tz62NGGroUP2pLZRc3z5lQ'
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOXGL_ACCESSTOKEN
 
 // Reference to the map container
 const mapContainer = ref(null)
