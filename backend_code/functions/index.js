@@ -287,3 +287,40 @@ exports.callAI = functions
         );
       }
     });
+
+exports.getUsers = functions
+    .region("australia-southeast1")
+    .https.onCall(async (data, context) => {
+    // Check if the user is authenticated
+      if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated",
+            "User must be authenticated.");
+      }
+
+      // Check if the user is an admin
+      if (context.auth.token.role !== "admin") {
+        throw new functions.https.HttpsError("permission-denied",
+            "User does not have permission.");
+      }
+
+      try {
+      // Fetch all users
+        const listUsersResult = await admin.auth().listUsers();
+        const users = listUsersResult.users.map((userRecord) => {
+          return {
+            uid: userRecord.uid,
+            email: userRecord.email,
+            metadata: {
+              creationTime: userRecord.metadata.creationTime,
+              lastSignInTime: userRecord.metadata.lastSignInTime,
+            },
+          };
+        });
+
+        return {users};
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        throw new functions.https.HttpsError("internal",
+            "Failed to fetch users.");
+      }
+    });

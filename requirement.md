@@ -1,7 +1,3 @@
-TODO
-
-1.ADMIN DASHBOARD LIST ALL SUER
-
-2.WRITE EMAIL
+WRITE EMAIL
 
 4.确保网页应用符合 WCAG 2.1 AA 无障碍标准，为残障用户提供无缝的用户体验。实现了各种无障碍功能，如键盘导航和非文本内容的文本替代。

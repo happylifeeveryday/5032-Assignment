@@ -56,7 +56,8 @@ const routes = [
   },
   {
     path: '/admin-dashboard',
-    component: AdminDashboardView
+    component: AdminDashboardView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/AIConsultant',
